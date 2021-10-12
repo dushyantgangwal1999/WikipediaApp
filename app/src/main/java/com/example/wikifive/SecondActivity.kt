@@ -53,7 +53,6 @@ class SecondActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun renderList(it: List<Page>) {
 
         adapter.addPages(it)

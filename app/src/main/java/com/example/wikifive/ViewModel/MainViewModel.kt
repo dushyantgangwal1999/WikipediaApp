@@ -25,7 +25,6 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
             users.postValue(data)
         }
     }
-
     fun getUsers():LiveData<List<Page>>{
         Log.d("USers",users.toString())
         return users

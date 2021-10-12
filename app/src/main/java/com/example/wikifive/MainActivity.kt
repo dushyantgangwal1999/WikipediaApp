@@ -22,13 +22,7 @@ class MainActivity : AppCompatActivity() {
             val intent= Intent(this,SecondActivity::class.java)
             intent.putExtra("SearchTerm", searchTerm)
             intent.putExtra("noOfItems",noOfItems)
-
             startActivity(intent)
-
-
-
         }
-
-
     }
 }
