@@ -15,35 +15,15 @@ import kotlinx.coroutines.withContext
 
 
 class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
-
-    //lateinit var searchTerm:MutableLiveData<String>
-    // var activityTwo=SecondActivity()
-//    lateinit var noOfItems:MutableLiveData<String>
     private val users=MutableLiveData<List<Page>>()
-    init {
-//        viewModelScope.launch {
-//
-//            searchUser()
-//        }
-
-//        viewModelScope.launch(Dispatchers.IO) {
-//            fun searchUser()=mainRepository.searchUser("Virat",4)
-//        }
-    }
-
-
-
-    suspend fun searchUser(searchTerms:String,noOfItems:Int){
+    suspend fun searchUser(searchTerms:String="India",noOfItems:Int=5){
 
           withContext(Dispatchers.IO){
             val data=mainRepository.searchUser(searchTerms,noOfItems)
             Log.d("data",data.toString())
             //data?.get(0)?.let { it.title?.let { it1 -> Log.d("ViewModelSearchUser", it1) } }
             users.postValue(data)
-    }
-
-
-
+        }
     }
 
     fun getUsers():LiveData<List<Page>>{
@@ -51,13 +31,7 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
         return users
     }
 
-
-//        viewModelScope.launch(Dispatchers.IO){
-//            var response=mainRepository.searchUser("Virat",4)
-//        }
-
-
-    }
+}
 
 
 
