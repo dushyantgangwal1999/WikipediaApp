@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,14 +22,16 @@ import kotlinx.coroutines.launch
 class SecondActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: MainAdapter
-    lateinit var search:String
-    lateinit var noOfItem:String
+    private var search :String=""
+    private lateinit var noOfItem : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
         val intent=intent
         search = intent.getStringExtra("SearchTerm").toString()
         noOfItem = intent.getStringExtra("noOfItems").toString()
+
+        Log.d("Arg",search+noOfItem)
 //        mainViewModel.searchTerm=search
 //        mainViewModel.noOfItems=noOfItem
         mainViewModel=
@@ -37,7 +40,14 @@ class SecondActivity : AppCompatActivity() {
         setupObserver()
         Log.d("MainActivity", mainViewModel.getUsers().toString())
         GlobalScope.launch {
-            mainViewModel.searchUser(search,noOfItem.toInt())
+            try {
+                mainViewModel.searchUser(search, noOfItem.toInt())
+            }catch (e:Exception){
+//                Toast.makeText(this,"You Have Entered" +
+//                        "Nothing",Toast.LENGTH_LONG).show()
+                Log.d("Exception",e.toString())
+            }
+
         }
 
 //        val result=findViewById<TextView>(R.id.searchview)
@@ -52,13 +62,13 @@ class SecondActivity : AppCompatActivity() {
     fun getSearchTerm(): String {
         return search
     }
-    fun getNoOfItems():String{
+    fun getNoOfItems(): String {
         return noOfItem
     }
     private fun setupObserver() {
 
         mainViewModel.getUsers().observe(this, Observer {
-            Log.d("Observe",it[0].toString())
+            //Log.d("Observe",it[0].toString())
             it?.let {
                 renderList(it)
             }
