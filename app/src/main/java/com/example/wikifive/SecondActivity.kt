@@ -45,7 +45,6 @@ class SecondActivity : AppCompatActivity() {
 
     }
     private fun setupObserver() {
-
         mainViewModel.getUsers().observe(this, Observer {
             //Log.d("Observe",it[0].toString())
             it?.let {
