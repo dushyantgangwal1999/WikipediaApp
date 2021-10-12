@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
     private val users=MutableLiveData<List<Page>>()
-    suspend fun searchUser(searchTerms:String="India",noOfItems:Int=5){
+    suspend fun searchUser(searchTerms:String,noOfItems:Int){
 
           withContext(Dispatchers.IO){
             val data=mainRepository.searchUser(searchTerms,noOfItems)
