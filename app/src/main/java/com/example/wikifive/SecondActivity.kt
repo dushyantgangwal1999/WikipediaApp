@@ -16,6 +16,8 @@ import com.example.wikithree.ViewModel.ViewModelFactory
 import com.example.wikithree.adapter.MainAdapter
 import com.example.wikithree.model.Page
 import kotlinx.android.synthetic.main.activity_second.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -30,20 +32,22 @@ class SecondActivity : AppCompatActivity() {
         val intent=intent
         search = intent.getStringExtra("SearchTerm").toString()
         noOfItem = intent.getStringExtra("noOfItems").toString()
-        mainViewModel=
-            ViewModelProvider(this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
+        setViewModel()
         setUI()
         setupObserver()
-        GlobalScope.launch {
-            try {
-                mainViewModel.searchUser(search, noOfItem.toInt())
-            }catch (e:Exception){
-                Log.d("Exception",e.toString())
-            }
+        setValue()
+    }
 
-        }
+    private fun setValue() {
+        mainViewModel.set(search,noOfItem.toInt())
+    }
+
+    private fun setViewModel() {
+        mainViewModel=
+            ViewModelProvider(this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
 
     }
+
     private fun setupObserver() {
         mainViewModel.getUsers().observe(this, Observer {
             //Log.d("Observe",it[0].toString())
