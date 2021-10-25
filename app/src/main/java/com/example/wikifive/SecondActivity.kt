@@ -33,19 +33,15 @@ class SecondActivity : AppCompatActivity() {
         setupObserver()
         setValue()
     }
-
     private fun setValue() {
-
+        try {
             mainViewModel.set(search, noOfItem.toInt())
-
+        }catch (e:Exception){}
     }
-
     private fun setViewModel() {
         mainViewModel=
             ViewModelProvider(this, ViewModelFactory(application,ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
-
     }
-
     private fun setupObserver() {
         mainViewModel.getUsers().observe(this, Observer {
             //Log.d("Observe",it[0].toString())
@@ -55,10 +51,8 @@ class SecondActivity : AppCompatActivity() {
         })
     }
     private fun renderList(it: List<Page>) {
-
         adapter.addPages(it)
         adapter.notifyDataSetChanged()
-
     }
     private fun setUI() {
         recyclerView.layoutManager= LinearLayoutManager(this)

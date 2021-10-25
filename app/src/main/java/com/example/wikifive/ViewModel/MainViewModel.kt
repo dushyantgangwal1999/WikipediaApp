@@ -13,12 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
     private var s1=""
     private var n1:Int=0
     private val users=MutableLiveData<List<Page>>()
-
+//----------------------------
     fun set(str1:String,no1:Int){
 
           s1=str1
@@ -26,15 +25,12 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
         viewModelScope.launch {
             try {
                    searchUser(s1,n1)
-               } catch (e:Exception){
-
-               }
+               } catch (e:Exception){ }
 
     }}
-
+//----------------------------------
     suspend fun searchUser(searchTerms:String,noOfItems:Int){
-
-          withContext(Dispatchers.IO){
+    withContext(Dispatchers.IO){
             val data=mainRepository.searchUser(searchTerms,noOfItems)
               Log.d("DataSize",data?.get(1)?.terms?.description?.get(0).toString())
 //            Log.d("data1",data?.get(0)?.title.toString())
@@ -43,7 +39,7 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
         }
         //Log.d("UserData", users.value?.get(0)?.title.toString())
     }
-
+//-------------------------------------------
     fun getUsers():LiveData<List<Page>>{
         Log.d("Users",users.toString())
         return users

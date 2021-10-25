@@ -24,5 +24,5 @@ interface ApiInterface {
         @Query("gpssearch") apigpssearch:String,
         @Query("gpslimit") apigpslimit:Int
 
-    ):MainDataClass
+    ):MainDataClass  //Returning The Object
 }
