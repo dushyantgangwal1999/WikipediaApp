@@ -20,12 +20,17 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
     private val users=MutableLiveData<List<Page>>()
 
     fun set(str1:String,no1:Int){
-        s1=str1
-        n1=no1
+
+          s1=str1
+          n1=no1
         viewModelScope.launch {
-            searchUser(s1,n1)
-        }
-    }
+            try {
+                   searchUser(s1,n1)
+               } catch (e:Exception){
+
+               }
+
+    }}
 
     suspend fun searchUser(searchTerms:String,noOfItems:Int){
 

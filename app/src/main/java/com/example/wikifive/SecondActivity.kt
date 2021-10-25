@@ -3,8 +3,7 @@ package com.example.wikifive
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,15 +15,12 @@ import com.example.wikithree.ViewModel.ViewModelFactory
 import com.example.wikithree.adapter.MainAdapter
 import com.example.wikithree.model.Page
 import kotlinx.android.synthetic.main.activity_second.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 
 class SecondActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: MainAdapter
-    private lateinit var search :String
+    private lateinit var search : String
     private lateinit var noOfItem : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +35,9 @@ class SecondActivity : AppCompatActivity() {
     }
 
     private fun setValue() {
-        mainViewModel.set(search,noOfItem.toInt())
+
+            mainViewModel.set(search, noOfItem.toInt())
+
     }
 
     private fun setViewModel() {
