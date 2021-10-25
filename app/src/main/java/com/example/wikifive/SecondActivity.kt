@@ -1,9 +1,10 @@
 package com.example.wikifive
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +16,8 @@ import com.example.wikithree.ViewModel.ViewModelFactory
 import com.example.wikithree.adapter.MainAdapter
 import com.example.wikithree.model.Page
 import kotlinx.android.synthetic.main.activity_second.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -29,21 +32,22 @@ class SecondActivity : AppCompatActivity() {
         val intent=intent
         search = intent.getStringExtra("SearchTerm").toString()
         noOfItem = intent.getStringExtra("noOfItems").toString()
-
-        mainViewModel=
-            ViewModelProvider(this, ViewModelFactory(application,ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
+        setViewModel()
         setUI()
         setupObserver()
-        GlobalScope.launch {
-            try {
-                mainViewModel.searchUser(search, noOfItem.toInt())
-            }catch (e:Exception){
-                Log.d("Exception",e.toString())
-            }
+        setValue()
+    }
 
-        }
+    private fun setValue() {
+        mainViewModel.set(search,noOfItem.toInt())
+    }
+
+    private fun setViewModel() {
+        mainViewModel=
+            ViewModelProvider(this, ViewModelFactory(application,ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
 
     }
+
     private fun setupObserver() {
         mainViewModel.getUsers().observe(this, Observer {
             //Log.d("Observe",it[0].toString())
@@ -51,7 +55,6 @@ class SecondActivity : AppCompatActivity() {
                 renderList(it)
             }
         })
-
     }
     private fun renderList(it: List<Page>) {
 
