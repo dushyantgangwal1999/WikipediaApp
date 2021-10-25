@@ -15,9 +15,10 @@ class MainRepository(applicationContext:Application,private val apiHelper: ApiHe
     private val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
     var finalPage= mutableListOf<Page>()
     suspend fun searchUser(search: String, noOfItem: Int): List<Page>? {
-        withContext(Dispatchers.IO){
-            database=dbHelper.getPages(search)
-        }
+//        withContext(Dispatchers.IO){
+//            database=dbHelper.getPages(search)
+//        }
+        database=dbHelper.getPages(search)
         Log.d("Repo1","Search USer")
         if(database.size>=noOfItem){
             for(i in 0 until noOfItem){
@@ -36,7 +37,8 @@ class MainRepository(applicationContext:Application,private val apiHelper: ApiHe
                 itemData.get(i).thumbnail?.source.toString()
             )
         //Log.d("ICount",i.toString())
-        withContext(Dispatchers.Unconfined){dbHelper.insertPages(item)}
+ //       withContext(Dispatchers.Unconfined){dbHelper.insertPages(item)}
+            dbHelper.insertPages(item)
         //Log.d("ItemLog",item.toString())
         }
         return result.query?.pages
