@@ -1,7 +1,6 @@
 package com.example.wikithree.model
 
 import com.google.gson.annotations.SerializedName
-
 data class Page(
     @SerializedName("index")val index: Int?,
     @SerializedName("ns")val ns: Int?,
