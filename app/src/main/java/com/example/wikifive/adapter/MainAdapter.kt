@@ -17,8 +17,6 @@ class MainAdapter(private val pages:ArrayList<Page>) : RecyclerView.Adapter<Main
         fun bind(page:Page){
             itemView.title_textView.text=page.title
             itemView.decription_textView.text= page.terms?.description?.get(0) ?: "Test"
-            // Setting Image Height And Width
-//            itemView.image_view.width= page.thumbnail?.width!!
             val uri=page.thumbnail?.source.toString()
             Glide.with(itemView.image_view.context)
                 .load(Uri.parse(uri))

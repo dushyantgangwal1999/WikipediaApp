@@ -18,17 +18,22 @@ class MainRepository(applicationContext:Application,private val apiHelper: ApiHe
 //        withContext(Dispatchers.IO){
 //            database=dbHelper.getPages(search)
 //        }
-        database=dbHelper.getPages(search)
-        Log.d("Repo1","Search USer")
-        if(database.size>=noOfItem){
+        database=dbHelper.getPages(search)  //Fetching Data From DataBase
+
+
+        if(database.size>=noOfItem){            //Checking Data Size
             for(i in 0 until noOfItem){
-                finalPage.add(database.get(i).toPage())
+                // Data We are Fetching From Our DataBase will be of Type Pages
+                finalPage.add(database.get(i).toPage())   //Converting Pages -> Page
             }
             return finalPage
         }
-                   //---FETCHING DATA---
-        val result = apiHelper.searchUser(search, noOfItem)
-        Log.d("Repo11",result.query?.pages?.get(0).toString())
+
+        //---------------------FETCHING DATA-----------------
+        // This Will Execute When Data Size is != Number Of Items We Want.
+
+        val result = apiHelper.searchUser(search, noOfItem)  // Making API Call Here
+
         val itemData=result.query?.pages
         for(i in 0 until noOfItem){
             val item=getNewEntry(itemData?.get(i)?.pageid!!.toLong(),
@@ -36,10 +41,9 @@ class MainRepository(applicationContext:Application,private val apiHelper: ApiHe
                 itemData.get(i).terms?.description?.get(0).toString(),
                 itemData.get(i).thumbnail?.source.toString()
             )
-        //Log.d("ICount",i.toString())
- //       withContext(Dispatchers.Unconfined){dbHelper.insertPages(item)}
-            dbHelper.insertPages(item)
-        //Log.d("ItemLog",item.toString())
+
+            dbHelper.insertPages(item) //Inserting Single Item:Pages Into DataBase
+
         }
         return result.query?.pages
     }
