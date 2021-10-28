@@ -1,18 +1,26 @@
 package com.example.wikithree.Repository
 
-import android.app.Application
 
+
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.example.wikifive.Database.*
+
+import com.example.wikifive.WikiApplication
+
 import com.example.wikithree.Api.ApiHelper
 import com.example.wikithree.model.Page
 import com.example.wikithree.model.Terms
 import com.example.wikithree.model.Thumbnail
 import kotlinx.coroutines.*
 
-class MainRepository(applicationContext:Application,private val apiHelper: ApiHelper) {
+class MainRepository(/*applicationContext:Application,*/private val apiHelper: ApiHelper) {
     private lateinit var database:List<Pages>
-    private val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+
+    val context = WikiApplication.applicationContext()
+
+    private val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(context))
     var finalPage= mutableListOf<Page>()
     suspend fun searchUser(search: String, noOfItem: Int): List<Page>? {
 //        withContext(Dispatchers.IO){
@@ -24,7 +32,7 @@ class MainRepository(applicationContext:Application,private val apiHelper: ApiHe
         if(database.size>=noOfItem){            //Checking Data Size
             for(i in 0 until noOfItem){
                 // Data We are Fetching From Our DataBase will be of Type Pages
-                finalPage.add(database.get(i).toPage())   //Converting Pages -> Page
+                finalPage.add(database[i].toPage())   //Converting Pages -> Page
             }
             return finalPage
         }

@@ -1,9 +1,9 @@
 package com.example.wikifive
 
+import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -38,14 +38,18 @@ class SecondActivity : AppCompatActivity() {
             mainViewModel.set(search, noOfItem.toInt())
         }catch (e:Exception){}
     }
+//    fun appContext(): Context? {
+//        return applicationContext
+//    }
     private fun setViewModel() {
         mainViewModel=
-            ViewModelProvider(this, ViewModelFactory(application,ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
+            ViewModelProvider(this, ViewModelFactory(ApiHelper(RetrofitBuilder.apiInterface))).get(MainViewModel::class.java)
     }
     private fun setupObserver() {
         mainViewModel.getUsers().observe(this, Observer {
             //Log.d("Observe",it[0].toString())
             it?.let {
+
                 renderList(it)
             }
         })
